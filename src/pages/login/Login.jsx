@@ -10,18 +10,30 @@ const Login = () => {
     login(dispatch, { username, password });
   };
   return (
-    <div>
+    <div
+      style={{
+        height: "100vh",
+        flexDirection: "column",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <input
+        style={{ padding: 10, marginBottom: 20 }}
         type="text"
         placeholder="username"
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
+        style={{ padding: 10, marginBottom: 20 }}
         type="password"
         placeholder="password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleClick}>Login</button>
+      <button onClick={handleClick} style={{ padding: 10, width: 100 }}>
+        Login
+      </button>
     </div>
   );
 };
