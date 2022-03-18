@@ -10,7 +10,8 @@ import { userRequest } from "../../requestMethod";
 export default function Product() {
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
-  const [pStates, setPStates] = useState([]);
+  const [pStats, setPStats] = useState([]);
+
   const product = useSelector((state) =>
     state.product.products.find((product) => product._id === productId)
   );
@@ -32,6 +33,7 @@ export default function Product() {
     ],
     []
   );
+
   useEffect(() => {
     const getStats = async () => {
       try {
@@ -40,7 +42,7 @@ export default function Product() {
           return a._id - b._id;
         });
         list.map((item) =>
-          setPStates((prev) => [
+          setPStats((prev) => [
             ...prev,
             { name: MONTHS[item._id - 1], Sales: item.total },
           ])
@@ -51,6 +53,7 @@ export default function Product() {
     };
     getStats();
   }, [productId, MONTHS]);
+
   return (
     <div className="product">
       <div className="productTitleContainer">
@@ -61,7 +64,7 @@ export default function Product() {
       </div>
       <div className="productTop">
         <div className="productTopLeft">
-          <Chart data={pStates} dataKey="Sales" title="Sales Performance" />
+          <Chart data={pStats} dataKey="Sales" title="Sales Performance" />
         </div>
         <div className="productTopRight">
           <div className="productInfoTop">
@@ -77,7 +80,6 @@ export default function Product() {
               <span className="productInfoKey">sales:</span>
               <span className="productInfoValue">5123</span>
             </div>
-
             <div className="productInfoItem">
               <span className="productInfoKey">in stock:</span>
               <span className="productInfoValue">{product.inStock}</span>
@@ -92,7 +94,7 @@ export default function Product() {
             <input type="text" placeholder={product.title} />
             <label>Product Description</label>
             <input type="text" placeholder={product.desc} />
-            <label>Product Price</label>
+            <label>Price</label>
             <input type="text" placeholder={product.price} />
             <label>In Stock</label>
             <select name="inStock" id="idStock">
